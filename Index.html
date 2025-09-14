@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chatbot</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928DAB);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 400px;
+      max-width: 90%;
+      height: 600px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: #6C63FF;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f7f7f7;
+    }
+
+    .message {
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 12px;
+      max-width: 80%;
+    }
+
+    .bot {
+      background: #6C63FF;
+      color: white;
+      align-self: flex-start;
+    }
+
+    .user {
+      background: #E0E0E0;
+      color: black;
+      align-self: flex-end;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .chat-input button {
+      background: #6C63FF;
+      color: white;
+      border: none;
+      padding: 15px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .chat-input button:hover {
+      background: #5848d5;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">🤖 AI Chatbot</div>
+    <div class="chat-box" id="chatBox">
+      <div class="message bot">Hello! I’m your AI assistant. How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (message === "") return;
+
+      // Show user message
+      addMessage(message, "user");
+      userInput.value = "";
+
+      // AI reply (simple logic for now)
+      setTimeout(() => {
+        let reply = generateReply(message);
+        addMessage(reply, "bot");
+      }, 500);
+    }
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerText = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // AI logic (basic for now, we can improve later)
+    function generateReply(message) {
+      message = message.toLowerCase();
+      if (message.includes("hello") || message.includes("hi")) {
+        return "Hey there! 👋 How are you doing?";
+      } else if (message.includes("your name")) {
+        return "I’m your AI chatbot, created to assist you. 🚀";
+      } else if (message.includes("joke")) {
+        return "😂 Why don’t skeletons fight each other? Because they don’t have the guts!";
+      } else if (message.includes("bye")) {
+        return "Goodbye 👋 Stay safe and keep hustling!";
+      } else {
+        return "Hmm 🤔 That’s interesting! Can you tell me more?";
+      }
+    }
+
+    // Send message when pressing Enter
+    userInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
